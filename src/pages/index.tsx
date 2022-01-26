@@ -18,7 +18,7 @@ const IndexPage = () => {
         });
         console.log(blogs);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err.message));
   }, []);
 
   return (

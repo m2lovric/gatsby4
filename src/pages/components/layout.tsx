@@ -2,7 +2,12 @@ import * as React from 'react';
 import { Link } from 'gatsby';
 import './layout.scss';
 
-const Layout = ({ pageTitle, children }) => {
+interface IProps {
+  pageTitle?: string;
+  children: any;
+}
+
+const Layout = ({ pageTitle, children }: IProps) => {
   return (
     <section className='container'>
       <title>{pageTitle}</title>
@@ -12,6 +17,9 @@ const Layout = ({ pageTitle, children }) => {
         </Link>
         <Link to='/blog' className='nav--link'>
           Blog
+        </Link>
+        <Link to='/add' className='nav--link'>
+          Add Blog
         </Link>
       </nav>
       <section>
