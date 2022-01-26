@@ -41,7 +41,9 @@ const AddBlog = () => {
         <input type='text' className='author' />
         <label>Content</label>
         <textarea className='content' />
-        <button className='btn'>Add Blog</button>
+        <button type='submit' className='btn'>
+          Add Blog
+        </button>
       </form>
     </Layout>
   );
