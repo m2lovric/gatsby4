@@ -5,12 +5,6 @@ import { addDoc, collection } from 'firebase/firestore';
 import './add.scss';
 import db from '../db';
 
-interface BlogData {
-  title: string;
-  author: string;
-  content: string;
-}
-
 const AddBlog = () => {
   useEffect(() => {
     const colRef = collection(db, 'blogs');

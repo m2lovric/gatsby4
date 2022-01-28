@@ -1,10 +1,12 @@
 import * as React from 'react';
-import Layout from './components/layout';
+import Layout from '../components/layout';
 import { useEffect, useState } from 'react';
-import db from '../db';
+import db from '../../db';
 import { collection, getDocs } from 'firebase/firestore';
+import BlogArticle from '../components/blogArticle';
+import { Link } from 'gatsby';
 
-interface BlogData {
+export interface BlogData {
   id: string;
   title: string;
   author: string;
@@ -31,16 +33,11 @@ const BlogPage = () => {
   return (
     <Layout pageTitle='Blog'>
       <p>React | Typescript | Firebase</p>
-
-      {data.map((blog) => {
-        return (
-          <article key={blog.id}>
-            <h2>{blog.title}</h2>
-            <p>{blog.author}</p>
-            <p>{blog.content}</p>
-          </article>
-        );
-      })}
+      {data.map((blog) => (
+        <Link to={'/blog/' + blog.id}>
+          <BlogArticle blogContent={blog} key={blog.id} />
+        </Link>
+      ))}
     </Layout>
   );
 };
