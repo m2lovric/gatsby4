@@ -14,7 +14,7 @@ export interface BlogData {
 }
 
 const BlogPage = () => {
-  const [data, setData] = React.useState<BlogData[]>([]);
+  const [data, setData] = useState<BlogData[]>([]);
 
   useEffect(() => {
     const colRef = collection(db, 'blogs');
@@ -34,8 +34,8 @@ const BlogPage = () => {
     <Layout pageTitle='Blog'>
       <p>React | Typescript | Firebase</p>
       {data.map((blog) => (
-        <Link to={'/blog/' + blog.id}>
-          <BlogArticle blogContent={blog} key={blog.id} />
+        <Link to={'/blog/' + blog.id} key={blog.id}>
+          <BlogArticle blogContent={blog} />
         </Link>
       ))}
     </Layout>
