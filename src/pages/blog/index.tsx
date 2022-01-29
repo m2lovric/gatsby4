@@ -2,7 +2,7 @@ import * as React from 'react';
 import Layout from '../components/layout';
 import { useEffect, useState } from 'react';
 import db from '../../db';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, onSnapshot } from 'firebase/firestore';
 import BlogArticle from '../components/blogArticle';
 import { Link } from 'gatsby';
 
@@ -19,15 +19,13 @@ const BlogPage = () => {
   useEffect(() => {
     const colRef = collection(db, 'blogs');
 
-    getDocs(colRef)
-      .then((snapshot) => {
-        let blogs = [];
-        snapshot.docs.forEach((doc) => {
-          blogs.push({ ...doc.data(), id: doc.id });
-        });
-        setData(blogs);
-      })
-      .catch((err) => console.log(err.message));
+    onSnapshot(colRef, (snapshot) => {
+      let blogs = [];
+      snapshot.docs.forEach((doc) => {
+        blogs.push({ ...doc.data(), id: doc.id });
+      });
+      setData(blogs);
+    });
   }, []);
 
   return (

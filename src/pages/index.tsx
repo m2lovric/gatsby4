@@ -4,21 +4,19 @@ import { StaticImage } from 'gatsby-plugin-image';
 
 import Layout from './components/layout';
 import db from '../db';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, onSnapshot } from 'firebase/firestore';
 
 const IndexPage = () => {
   useEffect(() => {
     const colRef = collection(db, 'blogs');
 
-    getDocs(colRef)
-      .then((snapshot) => {
-        let blogs = [];
-        snapshot.docs.forEach((doc) => {
-          blogs.push({ ...doc.data(), id: doc.id });
-        });
-        console.log(blogs);
-      })
-      .catch((err) => console.log(err.message));
+    onSnapshot(colRef, (snapshot) => {
+      let blogs = [];
+      snapshot.docs.forEach((doc) => {
+        blogs.push({ ...doc.data(), id: doc.id });
+      });
+      console.log(blogs);
+    });
   }, []);
 
   return (
