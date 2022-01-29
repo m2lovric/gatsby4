@@ -1,6 +1,6 @@
-import { collection, getDocs } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { BlogData } from '.';
 import db from '../../db';
 import Layout from '../components/layout';
@@ -8,35 +8,25 @@ import Layout from '../components/layout';
 const BlogPage = ({ params }) => {
   const id = params['id'];
 
-  const [data, setData] = React.useState<BlogData[]>([]);
+  const [data, setData] = useState<BlogData>(undefined);
 
   useEffect(() => {
-    const colRef = collection(db, 'blogs');
+    const docRef = doc(db, 'blogs', id);
 
-    getDocs(colRef)
-      .then((snapshot) => {
-        let blogs = [];
-        snapshot.docs.forEach((doc) => {
-          blogs.push({ ...doc.data(), id: doc.id });
-        });
-        setData(blogs);
-        console.log(blogs);
-      })
-      .catch((err) => console.log(err.message));
+    getDoc(docRef).then((doc) => {
+      const document = doc.data() as BlogData;
+      setData(document);
+    });
   }, []);
-
-  const blogContent = data.filter((el) => el.id === id)[0];
-
-  data && console.log(blogContent);
 
   return (
     <Layout>
       <h2>Blog Detials</h2>
-      {data && blogContent && (
+      {data && (
         <>
-          <h2>{blogContent.title}</h2>
-          <p>{blogContent.author}</p>
-          <p>{blogContent.content}</p>
+          <h2>{data.title}</h2>
+          <p>{data.author}</p>
+          <p>{data.content}</p>
         </>
       )}
     </Layout>
