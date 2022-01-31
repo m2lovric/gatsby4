@@ -23,7 +23,7 @@ const Layout = ({ pageTitle, children }: IProps) => {
         </Link>
       </nav>
       <section>
-        <h1 className='heading'>{pageTitle}</h1>
+        {pageTitle && <h1 className='heading'>{pageTitle}</h1>}
         {children}
       </section>
     </section>

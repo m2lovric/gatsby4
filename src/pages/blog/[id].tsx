@@ -2,7 +2,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { BlogData } from '.';
-import db from '../../db';
+import { db } from '../../db';
 import Layout from '../components/layout';
 
 const BlogPage = ({ params }) => {
