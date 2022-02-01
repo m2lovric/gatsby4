@@ -1,44 +1,60 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { StaticImage } from 'gatsby-plugin-image';
-
 import Layout from './components/layout';
 import { db } from '../db';
-import { collection, onSnapshot } from 'firebase/firestore';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signOut,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
 
 const IndexPage = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [signupData, setSignupData] = useState({ username: '', password: '' });
+  const [loginData, setLoginData] = useState({ username: '', password: '' });
+  db;
   const auth = getAuth();
 
-  useEffect(() => {
-    const colRef = collection(db, 'blogs');
-
-    onSnapshot(colRef, (snapshot) => {
-      let blogs = [];
-      snapshot.docs.forEach((doc) => {
-        blogs.push({ ...doc.data(), id: doc.id });
-      });
-      console.log(blogs);
-    });
-  }, []);
-
   const signUpForm = document.querySelector('.signup');
+  const loginForm = document.querySelector('.login');
 
   signUpForm &&
     signUpForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      console.log(username, password);
-      createUserWithEmailAndPassword(auth, username, password)
-        .then((userCred) => {
-          const user = userCred.user;
-          console.log(user);
-          setUsername('');
-          setPassword('');
+      createUserWithEmailAndPassword(
+        auth,
+        signupData.username,
+        signupData.password
+      )
+        .then((cred) => {
+          const user = cred.user;
+          console.log('Signed up:' + user);
+          setSignupData({ username: '', password: '' });
         })
-        .catch((err) => console.log(err.message));
+        .catch((err) => err);
     });
+
+  loginForm &&
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      signInWithEmailAndPassword(auth, loginData.username, loginData.password)
+        .then((cred) => {
+          const user = cred.user;
+          console.log('Logged in:' + user);
+          setLoginData({ username: '', password: '' });
+        })
+        .catch((err) => err);
+    });
+
+  const logout = document.querySelector('.logout');
+  logout &&
+    logout.addEventListener('click', () => {
+      signOut(auth).then(() => {
+        console.log('logged out');
+      });
+    });
+
   return (
     <Layout pageTitle='Develop...'>
       <StaticImage src='../images/develop.jpg' alt='keyboard' />
@@ -46,16 +62,44 @@ const IndexPage = () => {
       <form className='signup'>
         <input
           type='text'
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={signupData.username}
+          onChange={(e) =>
+            setSignupData({ ...signupData, username: e.target.value })
+          }
+          placeholder='Username'
         />
         <input
           type='password'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={signupData.password}
+          onChange={(e) =>
+            setSignupData({ ...signupData, password: e.target.value })
+          }
+          placeholder='Password'
         />
         <button type='submit'>Signup</button>
       </form>
+
+      <form className='login'>
+        <input
+          type='text'
+          value={loginData.username}
+          onChange={(e) =>
+            setLoginData({ ...loginData, username: e.target.value })
+          }
+          placeholder='Username'
+        />
+        <input
+          type='password'
+          value={loginData.password}
+          onChange={(e) =>
+            setLoginData({ ...loginData, password: e.target.value })
+          }
+          placeholder='Password'
+        />
+        <button type='submit'>Login</button>
+      </form>
+
+      <button className='logout'>Logout</button>
       <p>Matteo Lovric 2022</p>
     </Layout>
   );
