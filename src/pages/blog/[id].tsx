@@ -1,7 +1,7 @@
 import { doc, getDoc } from 'firebase/firestore';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { BlogData } from '.';
+import { BlogData } from './index';
 import { db } from '../../db';
 import Layout from '../components/layout';
 
