@@ -1,101 +1,75 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { StaticImage } from 'gatsby-plugin-image';
 import Layout from './components/layout';
-import { db } from '../db';
+import { auth } from '../firebase';
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   signOut,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
 
 const IndexPage = () => {
-  const [signupData, setSignupData] = useState({ username: '', password: '' });
-  const [loginData, setLoginData] = useState({ username: '', password: '' });
-  db;
-  const auth = getAuth();
+  useEffect(() => {
+    const signUpForm: HTMLFormElement = document.querySelector('.signup');
+    const loginForm: HTMLFormElement = document.querySelector('.login');
 
-  const signUpForm = document.querySelector('.signup');
-  const loginForm = document.querySelector('.login');
+    const usernameSignInput: HTMLInputElement = signUpForm.username;
+    const passwordSignInput: HTMLInputElement = signUpForm.password;
+    const usernameLoginInput: HTMLInputElement = loginForm.username;
+    const passwordLoginInput: HTMLInputElement = loginForm.password;
 
-  signUpForm &&
     signUpForm.addEventListener('submit', (e) => {
       e.preventDefault();
       createUserWithEmailAndPassword(
         auth,
-        signupData.username,
-        signupData.password
+        usernameSignInput.value,
+        passwordSignInput.value
       )
         .then((cred) => {
           const user = cred.user;
-          console.log('Signed up:' + user);
-          setSignupData({ username: '', password: '' });
+          console.log(user);
+          signUpForm.reset();
         })
-        .catch((err) => err);
+        .catch((err) => console.log(err.message));
     });
 
-  loginForm &&
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      signInWithEmailAndPassword(auth, loginData.username, loginData.password)
+      signInWithEmailAndPassword(
+        auth,
+        usernameLoginInput.value,
+        passwordLoginInput.value
+      )
         .then((cred) => {
           const user = cred.user;
-          console.log('Logged in:' + user);
-          setLoginData({ username: '', password: '' });
+          console.log(user);
+          loginForm.reset();
         })
-        .catch((err) => err);
+        .catch((err) => console.log(err.message));
     });
 
-  const logout = document.querySelector('.logout');
-  logout &&
+    const logout = document.querySelector('.logout');
     logout.addEventListener('click', () => {
       signOut(auth).then(() => {
         console.log('logged out');
       });
     });
+  }, []);
 
   return (
     <Layout pageTitle='Develop...'>
       <StaticImage src='../images/develop.jpg' alt='keyboard' />
 
       <form className='signup'>
-        <input
-          type='text'
-          value={signupData.username}
-          onChange={(e) =>
-            setSignupData({ ...signupData, username: e.target.value })
-          }
-          placeholder='Username'
-        />
-        <input
-          type='password'
-          value={signupData.password}
-          onChange={(e) =>
-            setSignupData({ ...signupData, password: e.target.value })
-          }
-          placeholder='Password'
-        />
+        <input type='text' name='username' placeholder='Email' />
+        <input type='password' name='password' placeholder='Password' />
         <button type='submit'>Signup</button>
       </form>
 
       <form className='login'>
-        <input
-          type='text'
-          value={loginData.username}
-          onChange={(e) =>
-            setLoginData({ ...loginData, username: e.target.value })
-          }
-          placeholder='Username'
-        />
-        <input
-          type='password'
-          value={loginData.password}
-          onChange={(e) =>
-            setLoginData({ ...loginData, password: e.target.value })
-          }
-          placeholder='Password'
-        />
+        <input type='text' name='username' placeholder='Email' />
+        <input type='password' name='password' placeholder='Password' />
         <button type='submit'>Login</button>
       </form>
 

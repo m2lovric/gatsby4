@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Layout from '../components/layout';
 import { useEffect, useState } from 'react';
-import { db } from '../../db';
+import { db } from '../../firebase';
 import { collection, onSnapshot } from 'firebase/firestore';
 import BlogArticle from '../components/blogArticle';
 import { Link } from 'gatsby';

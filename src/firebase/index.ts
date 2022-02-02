@@ -1,5 +1,6 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: process.env.GATSBY_API_KEY,
@@ -10,8 +11,13 @@ const firebaseConfig = {
   appId: process.env.GATSBY_APP_ID,
 };
 
-initializeApp(firebaseConfig);
+let app: FirebaseApp;
 
-const db = getFirestore();
+if (getApps().length) {
+  app = getApp();
+} else {
+  app = initializeApp(firebaseConfig);
+}
 
-export { db };
+export const db = getFirestore();
+export const auth = getAuth(app);

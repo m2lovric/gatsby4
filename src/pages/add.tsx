@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import Layout from './components/layout';
 import { addDoc, collection } from 'firebase/firestore';
 import './add.scss';
-import { db } from '../db';
+import { db } from '../firebase';
 
 const AddBlog = () => {
   useEffect(() => {
