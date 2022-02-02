@@ -3,7 +3,7 @@ import Layout from '../components/layout';
 import { useEffect, useState } from 'react';
 import { db } from '../../firebase';
 import { collection, onSnapshot } from 'firebase/firestore';
-import BlogArticle from '../components/blogArticle';
+//import BlogArticle from '../components/blogArticle';
 import { Link } from 'gatsby';
 
 export interface BlogData {
@@ -33,7 +33,7 @@ const IndexPage = () => {
       <p>React | Typescript | Firebase</p>
       {data.map((blog) => (
         <Link to={'/blog/' + blog.id} key={blog.id}>
-          <BlogArticle blogContent={blog} />
+          <h2>{blog.title}</h2>
         </Link>
       ))}
     </Layout>
