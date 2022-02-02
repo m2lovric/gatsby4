@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { StaticImage } from 'gatsby-plugin-image';
-import Layout from './components/layout';
+import Layout from '../components/layout';
 import { auth } from '../firebase';
 import {
   createUserWithEmailAndPassword,

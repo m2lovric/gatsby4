@@ -3,7 +3,7 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { BlogData } from './index';
 import { db } from '../../firebase';
-import Layout from '../components/layout';
+import Layout from '../../components/layout';
 
 const BlogPage = ({ params }) => {
   const id = params['id'];

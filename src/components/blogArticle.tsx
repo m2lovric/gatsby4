@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BlogData } from '../blog';
+import { BlogData } from '../pages/blog';
 
 interface BlogArticleProps {
   blogContent: BlogData;

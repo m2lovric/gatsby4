@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect } from 'react';
-import Layout from './components/layout';
+import Layout from '../components/layout';
 import { addDoc, collection } from 'firebase/firestore';
 import './add.scss';
 import { db } from '../firebase';
