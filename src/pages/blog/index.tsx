@@ -13,7 +13,7 @@ export interface BlogData {
   content: string;
 }
 
-const IndexPage = () => {
+const BlogPage = () => {
   const [data, setData] = useState<BlogData[]>([]);
 
   useEffect(() => {
@@ -40,4 +40,4 @@ const IndexPage = () => {
   );
 };
 
-export default IndexPage;
+export default BlogPage;
