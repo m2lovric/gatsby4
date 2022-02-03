@@ -6,7 +6,7 @@
 
 .nav {
   display: flex;
-  width: 40%;
+  width: 60%;
   justify-content: space-between;
 
   &--link {
@@ -49,4 +49,14 @@
 a {
   text-decoration: none;
   color: #151515;
+}
+
+@media (max-width: 420px) {
+  body {
+    padding: 10px;
+  }
+
+  .nav {
+    width: 80%;
+  }
 }

@@ -8,6 +8,7 @@ import {
   signOut,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
+import './index.scss';
 
 const IndexPage = () => {
   useEffect(() => {
@@ -59,15 +60,15 @@ const IndexPage = () => {
 
   return (
     <Layout pageTitle='Develop...'>
-      <StaticImage src='../images/develop.jpg' alt='keyboard' />
+      <StaticImage src='../images/develop.jpg' alt='keyboard' className='img' />
 
-      <form className='signup'>
+      <form className='signup form'>
         <input type='text' name='username' placeholder='Email' />
         <input type='password' name='password' placeholder='Password' />
         <button type='submit'>Signup</button>
       </form>
 
-      <form className='login'>
+      <form className='login form'>
         <input type='text' name='username' placeholder='Email' />
         <input type='password' name='password' placeholder='Password' />
         <button type='submit'>Login</button>

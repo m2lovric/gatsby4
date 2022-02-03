@@ -21,6 +21,9 @@ const Layout = ({ pageTitle, children }: IProps) => {
         <Link to='/add' className='nav--link'>
           Add Blog
         </Link>
+        <Link to='/profile' className='nav--link'>
+          Profile
+        </Link>
       </nav>
       <section>
         {pageTitle && <h1 className='heading'>{pageTitle}</h1>}
