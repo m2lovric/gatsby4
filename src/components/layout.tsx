@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { Link } from 'gatsby';
 import './layout.scss';
+import { auth } from '../firebase';
+import { onAuthStateChanged } from 'firebase/auth';
+import { useState } from 'react';
 
 interface IProps {
   pageTitle?: string;
@@ -8,6 +11,17 @@ interface IProps {
 }
 
 const Layout = ({ pageTitle, children }: IProps) => {
+  const [user, setUser] = useState(false);
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const uid = user.uid;
+      setUser(true);
+    } else {
+      setUser(false);
+    }
+  });
+
   return (
     <section className='container'>
       <title>{pageTitle}</title>
@@ -18,12 +32,16 @@ const Layout = ({ pageTitle, children }: IProps) => {
         <Link to='/blog' className='nav--link'>
           Blog
         </Link>
-        <Link to='/add' className='nav--link'>
-          Add Blog
-        </Link>
-        <Link to='/profile' className='nav--link'>
-          Profile
-        </Link>
+        {user && (
+          <>
+            <Link to='/add' className='nav--link'>
+              Add Blog
+            </Link>
+            <Link to='/profile' className='nav--link'>
+              Profile
+            </Link>
+          </>
+        )}
       </nav>
       <section>
         {pageTitle && <h1 className='heading'>{pageTitle}</h1>}
