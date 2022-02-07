@@ -7,6 +7,12 @@ const ProfilePage = () => {
 
   return (
     <Layout>
+      <nav>
+        <p>Admin</p>
+        <p>Blog posts</p>
+        <p>Users</p>
+        <p>Review Content</p>
+      </nav>
       <div>
         <h2>Profile</h2>
         <p>Name: {'Name' || (currentUser && currentUser.displayName)}</p>
