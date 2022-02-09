@@ -1,0 +1,29 @@
+.profile {
+  display: flex;
+  margin-top: 60px;
+  width: 100%;
+
+  &--edit-btn {
+    width: 60px;
+    height: 30px;
+    color: white;
+    background-color: rebeccapurple;
+  }
+
+  &--sidenav {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    a {
+      margin-bottom: 20px;
+    }
+  }
+
+  &--main {
+    padding-left: 40px;
+    width: 70%;
+    h2 {
+      margin: 0;
+    }
+  }
+}
